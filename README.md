@@ -10,7 +10,7 @@ Por ahora solo están algunos de los *scripts* utilizados de manera rutinaria po
 Futuro:
 - Subir protocolos para los análisis de la Unidad.
 - Subir los *scripts* utilizados para realización de GWAS.
-- Subir los scripts utilizados para los estudios de asociación, para genotipados y secuenciación.
+- Subir los *scripts* utilizados para los estudios de asociación, para genotipados y secuenciación.
 - Evitar el *hardcoding* de los programas actuales.
  
 ## Contribuidores:
