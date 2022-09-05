@@ -40,3 +40,10 @@ plink --bed ${outDir}/plink/ADgenes_ALL_af5.bed --bim ${outDir}/plink/ADgenes_AL
 plink --bed ${outDir}/plink/ADgenes_ALL_af1.bed --bim ${outDir}/plink/ADgenes_ALL_af1.bim --fam ${refDir}/plink.fam --geno 0.05 --recode --make-bed --hwe 0.00001 --set-missing-var-ids @:# --set-hh-missing --out ${outDir}/plink/ADgenes_ALL_af1_clean
 plink --bed ${outDir}/plink/ADgenes_ALL_af5.bed --bim ${outDir}/plink/ADgenes_ALL_af5.bim --fam ${refDir}/plink.fam --geno 0.25 --recode vcf --hwe 0.00001 --set-missing-var-ids @:# --set-hh-missing --out ${outDir}/plink/ADgenes_ALL_af5_clean
 plink --bed ${outDir}/plink/ADgenes_ALL_af1.bed --bim ${outDir}/plink/ADgenes_ALL_af1.bim --fam ${refDir}/plink.fam --geno 0.05 --recode vcf --hwe 0.00001 --set-missing-var-ids @:# --set-hh-missing --out ${outDir}/plink/ADgenes_ALL_af1_clean
+
+# Pruning
+plink --bfile ${outDir}/plink/ADgenes_ALL_af5_clean --fam ${refDir}/plink.fam --indep-pairwise 50 5 0.5 --out ${outDir}/plink/ADgenes_ALL_af5_clean_prune
+plink --bfile ${outDir}/plink/ADgenes_ALL_af5_clean --fam ${refDir}/plink.fam --exctract ${outDir}/plink/ADgenes_ALL_af5_clean_prune.prune.in --out ${outDir}/plink/ADgenes_ALL_af5_clean_pruned
+
+plink --bfile ${outDir}/plink/ADgenes_ALL_af1_clean --fam ${refDir}/plink.fam --indep-pairwise 50 5 0.5 --out ${outDir}/plink/ADgenes_ALL_af1_clean_prune
+plink --bfile ${outDir}/plink/ADgenes_ALL_af1_clean --fam ${refDir}/plink.fam --exctract ${outDir}/plink/ADgenes_ALL_af1_clean_prune.prune.in --out ${outDir}/plink/ADgenes_ALL_af1_clean_pruned

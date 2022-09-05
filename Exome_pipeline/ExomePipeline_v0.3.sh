@@ -31,8 +31,6 @@ resultados del cluster)
 -a -> hg38 o hg19
 
 ## Requisitos previos a la pipeline:
-# Descarga de los recursos de Funcotator
-# Descarga de la base de datos de SIFT4G
 # Descarga del repositorio de VEP
 # Indexar el genoma de referencia (esto está incluido en la pipeline pero será necesario
 # comprobar que la dirección al repositorio sea correcta)"
@@ -64,7 +62,7 @@ export scrDir=""
 export assembly=""
 
 
-## #Creación de directorios ###
+### Creación de directorios ###
 
 while [ -n "$1" ]; do
 	case "$1" in
@@ -172,7 +170,7 @@ fastp -i ${sampDir}/${sample}/${prefix}_L002_R1_001.fastq.gz -I ${sampDir}/${sam
 --cut_tail --cut_window_size=10 --cut_mean_quality=20 --length_required=50 -c
 
 
-# Ejecutamos bwa mem
+## Ejecutamos bwa mem ##
 bwa mem \
     -t 8 \
     -K 100000000 \
@@ -191,15 +189,15 @@ bwa mem \
     ${outDir}/${group}/${sample}/${sample}_L2_R2_out.fq \
     > ${outDir}/${group}/${sample}/${sample}_L2.sam
 
-## Samtools
+## Samtools ##
 samtools view -bS ${outDir}/${group}/${sample}/${sample}_L1.sam | samtools sort -o ${outDir}/${group}/${sample}/${sample}_L1.sorted
 samtools view -bS ${outDir}/${group}/${sample}/${sample}_L2.sam | samtools sort -o ${outDir}/${group}/${sample}/${sample}_L2.sorted
 rm ${outDir}/${group}/${sample}/${sample}*.sam
 
-## Merge bam files
+## Merge bam files ##
 java -jar $EBROOTPICARD/picard.jar MergeSamFiles I=${outDir}/${group}/${sample}/${sample}_L1.sorted I=${outDir}/${group}/${sample}/${sample}_L2.sorted O=${outDir}/${group}/${sample}/${sample}_output_merge.bam
 
-## Marcamos duplicados
+## Marcamos duplicados ## 
 java -jar $EBROOTPICARD/picard.jar MarkDuplicates I=${outDir}/${group}/${sample}/${sample}_output_merge.bam M=${outDir}/${group}/${sample}/${sample}_dedup_metrics.txt O=${outDir}/${group}/${sample}/${sample}_sorted_dedup_reads.bam
 rm ${outDir}/${group}/${sample}/*.sorted
 
