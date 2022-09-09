@@ -3,7 +3,7 @@
 
 echo $(date)
 
-for i in ALL MCI AD control; do
+for i in ALL severe moderate assymp; do
 		FILE=${outDir}/recalibrated_variants_DP20_gatk_het_${i}.vcf
 		if [ -f "$FILE" ]; then
 		    echo "$FILE exists. Going to VEP annotation!"
@@ -19,54 +19,53 @@ for i in ALL MCI AD control; do
 				--set-filtered-genotype-to-no-call true \
 				-genotype-filter-name "GQ" -genotype-filter-expression "GQ < 20" 
 		
-			## Getting control genotypes (at least 1 called && at least 1 VAR allele & BIALLELIC)
+			## Getting assymp genotypes (at least 1 called && at least 1 VAR allele & BIALLELIC)
 			gatk SelectVariants \
 				-R ${refDir}/${assembly}/Homo_sapiens_assembly.fasta \
 				-V ${outDir}/recalibrated_variants_DP20_gatk.vcf \
-				-L ${refDir}/Exome_V6.bed \
-				-O ${outDir}/recalibrated_variants_DP20_gatk_het_control.vcf \
-				--exclude-sample-name ${outDir}/MCI.args \
-				--exclude-sample-name ${outDir}/AD.args \
+				-L ${refDir}/${assembly}/Exome_V6.bed \
+				-O ${outDir}/recalibrated_variants_DP20_gatk_het_assymp.vcf \
+				--exclude-sample-name ${outDir}/moderate.args \
+				--exclude-sample-name ${outDir}/severe.args \
 			 	-select 'vc.getCalledChrCount() != 0 && (vc.getHetCount() >= 1 or vc.getHomVarCount() >= 1)'  \
 				--restrict-alleles-to BIALLELIC \
-				--exclude-filtered true
+				--exclude-filtered false
 			
-			## Getting AD genotypes (at least 1 called && at least 1 VAR allele & BIALLELIC)
+			## Getting severe genotypes (at least 1 called && at least 1 VAR allele & BIALLELIC)
 			gatk SelectVariants \
 			        -R ${refDir}/${assembly}/Homo_sapiens_assembly.fasta \
 		        	-V ${outDir}/recalibrated_variants_DP20_gatk.vcf \
-			        -L ${refDir}/Exome_V6.bed \
-			        -O ${outDir}/recalibrated_variants_DP20_gatk_het_AD.vcf \
-			        --exclude-sample-name ${outDir}/control.args \
-		        	--exclude-sample-name ${outDir}/MCI.args \
+			        -L ${refDir}/${assembly}/Exome_V6.bed \
+			        -O ${outDir}/recalibrated_variants_DP20_gatk_het_severe.vcf \
+			        --exclude-sample-name ${outDir}/assymp.args \
+		        	--exclude-sample-name ${outDir}/moderate.args \
 				-select 'vc.getCalledChrCount() != 0 && (vc.getHetCount() >= 1 or vc.getHomVarCount() >= 1)' \
 			        --restrict-alleles-to BIALLELIC \
-			        --exclude-filtered true
+			        --exclude-filtered false
 		
-			## Getting MCI genotypes (at least 1 called && at least 1 VAR allele & BIALLELIC)
+			## Getting moderate genotypes (at least 1 called && at least 1 VAR allele & BIALLELIC)
 			gatk SelectVariants \
 			        -R ${refDir}/${assembly}/Homo_sapiens_assembly.fasta \
 			        -V ${outDir}/recalibrated_variants_DP20_gatk.vcf \
-			        -L ${refDir}/Exome_V6.bed \
-			        -O ${outDir}/recalibrated_variants_DP20_gatk_het_MCI.vcf \
-			        --exclude-sample-name ${outDir}/control.args \
-			        --exclude-sample-name ${outDir}/AD.args \
+			        -L ${refDir}/${assembly}/Exome_V6.bed \
+			        -O ${outDir}/recalibrated_variants_DP20_gatk_het_moderate.vcf \
+			        --exclude-sample-name ${outDir}/assymp.args \
+			        --exclude-sample-name ${outDir}/severe.args \
 				-select 'vc.getCalledChrCount() != 0 && (vc.getHetCount() >= 1 or vc.getHomVarCount() >= 1)' \
 		        	--restrict-alleles-to BIALLELIC \
-			        --exclude-filtered true
+			        --exclude-filtered false
 
 			gatk SelectVariants \
                                 -R ${refDir}/${assembly}/Homo_sapiens_assembly.fasta \
                                 -V ${outDir}/recalibrated_variants_DP20_gatk.vcf \
-                                -L ${refDir}/Exome_V6.bed \
+                                -L ${refDir}/${assembly}/Exome_V6.bed \
                                 -O ${outDir}/recalibrated_variants_DP20_gatk_het_ALL.vcf \
                                 -select 'vc.getCalledChrCount() != 0 && (vc.getHetCount() >= 1 or vc.getHomVarCount() >= 1)' \
                                 --restrict-alleles-to BIALLELIC \
-                                --exclude-filtered true
+                                --exclude-filtered false
 
 			sbatch -p normal --dependency=afterok:${SLURM_JOB_ID} ${scrDir}/annotate_${i}.sh
 		fi
 done
 
 echo $(date)
-
