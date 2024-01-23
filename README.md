@@ -2,7 +2,7 @@
 
 Unitat de Genètica Molecular
 
-**En desarrollo**
+**En desenvolupament**
 
 Repositori de *scripts* i protocols utilizatss pels bioinformàtics de la Unitat de Genètica Molecular de l'IBV-CSIC.
 
@@ -13,7 +13,7 @@ Futur:
 - Pujar els *scripts* utilitzats per a la realització de GWAS (Cohort de AD del projecte GR@CE amb controls de 1kG).
 
 
-## Contribuidores
+## Col.laboradors
 
 - Jordi Durbán Sánchez (PhD)
 - Rubén Cañas Cañas (MSc Student)
