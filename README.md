@@ -4,13 +4,14 @@ Unitat de Genètica Molecular
 
 **En desarrollo**
 
-Repositorio de *scripts* y protocolos utilizados por los Bioinformáticos de la Unidad de Genética Molecular del IBV-CSIC.
+Repositori de *scripts* i protocols utilizatss pels bioinformàtics de la Unitat de Genètica Molecular de l'IBV-CSIC.
 
-Por ahora solo están los *scripts* utilizados de manera rutinaria por la unidad para el análisis de exomas (WES).
+Ara només estan els *scripts* utilitzats de manera rutinaria per a la unitat per a l'anàlisi d'exomes (WES).
 
-Futuro:
-- Subir protocolos para los análisis de la Unidad.
-- Subir los *scripts* utilizados para la realización de GWAS (Cohorte de AD del proyecto GR@CE con controles de 1kG).
+Futur:
+- Pujar protocols per a l'anàlisi de la Unitat.
+- Pujar els *scripts* utilitzats per a la realització de GWAS (Cohort de AD del projecte GR@CE amb controls de 1kG).
+
 
 ## Contribuidores
 
